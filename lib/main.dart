@@ -26,13 +26,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //TextEditingController _name, _email, _phn, _pass, _cpass;
   TextEditingController _name = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _phn = TextEditingController();
   TextEditingController _pass = TextEditingController();
   TextEditingController _cpass = TextEditingController();
   var _formKey = GlobalKey<ScaffoldState>();
+  bool hidePass = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: _name,
                       decoration: InputDecoration(
                         icon: Icon(Icons.person),
-                        labelText: 'Name',
+                        labelText: 'Full Name',
                       ),
                     ),
                     SizedBox(height: 10),
@@ -87,19 +87,31 @@ class _MyHomePageState extends State<MyHomePage> {
                     SizedBox(height: 10),
                     TextFormField(
                       controller: _pass,
-                      obscureText: true,
+                      obscureText: hidePass,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         icon: Icon(Icons.security),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.visibility),
+                          onPressed: () {
+                            showandhide();
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 10),
                     TextFormField(
-                      obscureText: true,
+                      obscureText: hidePass,
                       controller: _cpass,
                       decoration: InputDecoration(
                         labelText: 'Confirm Password',
                         icon: Icon(Icons.border_color),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.visibility),
+                          onPressed: () {
+                            showandhide();
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 15),
@@ -132,6 +144,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  showandhide() {
+    setState(() {
+      hidePass = !hidePass;
+    });
+  }
+
   void _showInSnackBar({String message}) {
     _formKey.currentState.showSnackBar(
       SnackBar(
@@ -151,18 +169,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   formValidate({name, email, phn, pass, cpass}) {
     if (name.toString().isEmpty) {
-      print('name cannot be empty');
-      _showInSnackBar(message: 'Name cannot be empty');
+      _showInSnackBar(message: 'Full name required');
     } else if (email.toString().isEmpty) {
-      print('email cannot be empty');
-      _showInSnackBar(message: 'Email cannot be empty');
+      _showInSnackBar(message: 'Invalid email address');
     } else if (phn.toString().isEmpty) {
-      _showInSnackBar(message: 'Phone no cannot be empty');
+      _showInSnackBar(message: 'Invalid phone number');
     } else if (pass.toString().isEmpty || pass.length != 8) {
-      print('8 digits required for password');
-      _showInSnackBar(message: '8 digits required for password');
+      _showInSnackBar(message: '8 character required for password');
     } else if (cpass.toString() != pass.toString()) {
-      _showInSnackBar(message: '8 digits required for password');
+      _showInSnackBar(message: 'Password does not match');
     } else {
       openDia(name: name);
     }
@@ -173,8 +188,8 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: Text('$name has been verified to login'),
-            title: Text('Login Successful'),
+            content: Text('$name is now a verified account'),
+            title: Text('Registration Successful'),
             actions: <Widget>[
               MaterialButton(
                 onPressed: () {
