@@ -1,3 +1,6 @@
+// if you download this source code from github do well by ⭐ the repo
+// and follow me as well. Thanks https://github.com/acctgen1
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -167,12 +170,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  formValidate({name, email, phn, pass, cpass}) {
+  formValidate({String name, email, phn, pass, cpass}) {
     if (name.toString().isEmpty) {
       _showInSnackBar(message: 'Full name required');
-    } else if (email.toString().isEmpty) {
+    } else if (!email.toString().contains('@')) {
       _showInSnackBar(message: 'Invalid email address');
-    } else if (phn.toString().isEmpty) {
+    } else if (phn.toString().isEmpty || phn.length != 11) {
       _showInSnackBar(message: 'Invalid phone number');
     } else if (pass.toString().isEmpty || pass.length != 8) {
       _showInSnackBar(message: '8 character required for password');
