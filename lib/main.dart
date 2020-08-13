@@ -16,10 +16,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
   }
-}
+} // so we're create a normal startup of a flutter application here
+// so in our MyHomePage is where we're going to be working
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -34,14 +36,16 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _phn = TextEditingController();
   TextEditingController _pass = TextEditingController();
   TextEditingController _cpass = TextEditingController();
-  var _formKey = GlobalKey<ScaffoldState>();
+  // So all this four controller's is for the textfield we're creating
+  var _formKey = GlobalKey<ScaffoldState>(); // a scaffold Globalkey
   bool hidePass = true;
+  // this is a boolean called hidePass we're going to use it for show and hide password
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _formKey,
       appBar: AppBar(
-        title: Text('Simple Form Validation'),
+        title: Text('Flutter Form Validation'),
         centerTitle: true,
         elevation: 0,
       ),
@@ -52,8 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Center(
                 child: Text(
-                  'Register Page',
+                  'Welcome to MyPage!!!',
                   style: TextStyle(
+                    decoration: TextDecoration.underline,
                     fontSize: 24,
                     fontWeight: FontWeight.w300,
                   ),
@@ -69,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         icon: Icon(Icons.person),
                         labelText: 'Full Name',
                       ),
-                    ),
+                    ), // textfield for the name session and so on
                     SizedBox(height: 10),
                     TextFormField(
                       controller: _email,
