@@ -23,3 +23,16 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 "# flutter_form_validation" 
+
+saveScreen() async {
+    RenderRepaintBoundary boundary = scr.currentContext.findRenderObject();
+    if (boundary.debugNeedsPaint) {
+      Timer(Duration(seconds: 1), () => saveScreen());
+      return null;
+    }
+    ui.Image image = await boundary.toImage();
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final result =
+        await ImageGallerySaver.saveImage(byteData.buffer.asUint8List());
+    print('$byteData ********** Saved to gallery *********** $result');
+}
